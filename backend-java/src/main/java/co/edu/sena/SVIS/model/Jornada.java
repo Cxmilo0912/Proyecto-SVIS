@@ -9,5 +9,33 @@ package co.edu.sena.SVIS.model;
  * @author Admin
  */
 public class Jornada {
+    private int Id;
+    private String Nombre;
+
+    public Jornada() {
+    }
+
+    public Jornada(String Nombre) {
+        this.Nombre = Nombre;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+
+    public String getNombre() {
+        return Nombre;
+    }
+
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
+    
+    
+    
     
 }

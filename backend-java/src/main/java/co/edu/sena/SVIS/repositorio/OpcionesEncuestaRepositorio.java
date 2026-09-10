@@ -4,10 +4,14 @@
  */
 package co.edu.sena.SVIS.repositorio;
 
+import co.edu.sena.SVIS.model.OpcionesEncuesta;
+import java.util.List;
+
 /**
  *
  * @author julil
  */
 public interface OpcionesEncuestaRepositorio {
-    
+    List<OpcionesEncuesta> ListarPorEncuesta();
+    OpcionesEncuestaRepositorio Crear();
 }

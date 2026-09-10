@@ -4,10 +4,15 @@
  */
 package co.edu.sena.SVIS.repositorio;
 
+import co.edu.sena.SVIS.model.Usuario;
+import java.util.List;
+
 /**
  *
  * @author julil
  */
 public interface UsuarioRepositorio {
-    
+    List<Usuario> ListarUsuarios();
+    Usuario Crear(Usuario usuario);
+    Usuario Editar(Usuario usuario);
 }
