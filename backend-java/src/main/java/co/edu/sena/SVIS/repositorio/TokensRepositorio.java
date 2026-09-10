@@ -4,10 +4,13 @@
  */
 package co.edu.sena.SVIS.repositorio;
 
+import co.edu.sena.SVIS.model.Tokens;
+
+
 /**
  *
  * @author julil
  */
 public interface TokensRepositorio {
-    
+   Tokens Crear(Tokens tokens);
 }

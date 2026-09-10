@@ -4,10 +4,13 @@
  */
 package co.edu.sena.SVIS.repositorio;
 
+import co.edu.sena.SVIS.model.Rol;
+import java.util.List;
+
 /**
  *
  * @author julil
  */
 public interface RolRepositorio {
-    
+    List<Rol> ListarRol();
 }

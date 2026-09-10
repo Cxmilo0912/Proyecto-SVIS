@@ -4,10 +4,14 @@
  */
 package co.edu.sena.SVIS.repositorio;
 
+import co.edu.sena.SVIS.model.Jornada;
+import java.util.List;
+
 /**
  *
  * @author julil
  */
 public interface JornadaRepositorio {
+    List<Jornada> ListarJornada ();
     
 }
