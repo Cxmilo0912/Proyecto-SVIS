@@ -15,7 +15,7 @@ public class Usuario {
     private String Apellido;
     private String Email;
     private String Celular;
-    private String Contraseña;
+    private String Contrasena;
     private Rol Rol;
     private Jornada Jornada;
 
@@ -28,7 +28,7 @@ public class Usuario {
         this.Apellido = Apellido;
         this.Email = Email;
         this.Celular = Celular;
-        this.Contraseña = Contraseña;
+        this.Contrasena = Contraseña;
         this.Rol = Rol;
         this.Jornada = Jornada;
     }
@@ -81,12 +81,12 @@ public class Usuario {
         this.Celular = Celular;
     }
 
-    public String getContraseña() {
-        return Contraseña;
+    public String getContrasena() {
+        return Contrasena;
     }
 
-    public void setContraseña(String Contraseña) {
-        this.Contraseña = Contraseña;
+    public void setContrasena(String Contraseña) {
+        this.Contrasena = Contraseña;
     }
 
     public Rol getRol() {

@@ -13,6 +13,7 @@ import java.util.List;
  */
 public interface UsuarioRepositorio {
     List<Usuario> ListarUsuarios();
-    Usuario Crear(Usuario usuario);
-    Usuario Editar(Usuario usuario);
+    void Crear(Usuario usuario);
+    void Editar(Usuario usuario);
+    String ValidarCredenciales(String email);
 }

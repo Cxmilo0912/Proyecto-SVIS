@@ -10,24 +10,28 @@ import java.time.LocalDateTime;
  *
  * @author Admin
  */
-public class Tokens {
+public class Token {
     private int Id;
     private Encuesta Encuesta;
     private Usuario Usuario;
     private String Token;
     private String Estado;
     private LocalDateTime FechaUso;
+    private LocalDateTime FechaExpiracion;
 
-    public Tokens() {
+    public Token() {
     }
 
-    public Tokens(Encuesta Encuesta, Usuario Usuario, String Token, String Estado, LocalDateTime FechaUso) {
+    public Token(Encuesta Encuesta, Usuario Usuario, String Token, String Estado, LocalDateTime FechaUso, LocalDateTime FechaExpiracion) {
         this.Encuesta = Encuesta;
         this.Usuario = Usuario;
         this.Token = Token;
         this.Estado = Estado;
         this.FechaUso = FechaUso;
+        this.FechaExpiracion = FechaExpiracion;
     }
+
+    
 
     public int getId() {
         return Id;
@@ -76,6 +80,15 @@ public class Tokens {
     public void setFechaUso(LocalDateTime FechaUso) {
         this.FechaUso = FechaUso;
     }
+
+    public LocalDateTime getFechaExpiracion() {
+        return FechaExpiracion;
+    }
+
+    public void setFechaExpiracion(LocalDateTime FechaExpiracion) {
+        this.FechaExpiracion = FechaExpiracion;
+    }
+    
     
     
     
