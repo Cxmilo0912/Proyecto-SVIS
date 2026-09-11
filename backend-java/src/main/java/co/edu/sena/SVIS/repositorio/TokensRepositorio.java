@@ -4,7 +4,9 @@
  */
 package co.edu.sena.SVIS.repositorio;
 
-import co.edu.sena.SVIS.model.Tokens;
+import co.edu.sena.SVIS.model.Token;
+import java.sql.Connection;
+import java.util.List;
 
 
 /**
@@ -12,5 +14,9 @@ import co.edu.sena.SVIS.model.Tokens;
  * @author julil
  */
 public interface TokensRepositorio {
-   Tokens Crear(Tokens tokens);
+   void Crear(List<Token> tokens);
+   Token MtBuscarYBloquear(Connection cn, Token oToken);
+   void MtMarcarComoUsado(int idToken);
+   boolean MtEmitirVoto();
+   String MtBuscarTokenUsuario(int idEncuesta, int idUsuario);
 }
