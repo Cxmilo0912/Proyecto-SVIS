@@ -1,0 +1,103 @@
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #f0fdf4 0%, #d1fae5 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-wrapper {
+    width: 100%;
+    max-width: 420px;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+.login-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #a7f3d0;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header h2 {
+    font-size: 2rem;
+    color: #022c22;
+    margin: 0 0 0.25rem 0;
+    letter-spacing: -1px;
+}
+
+.login-header p {
+    color: #047857;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.login-form .form-group {
+    margin-bottom: 1.25rem;
+}
+
+.login-form label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #064e3b;
+    margin-bottom: 0.5rem;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    background-color: #f8fafc;
+    transition: all 0.2s;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: #059669;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+
+.btn-login {
+    width: 100%;
+    background-color: #059669;
+    color: white;
+    border: none;
+    padding: 0.85rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-top: 1rem;
+}
+
+.btn-login:hover {
+    background-color: #047857;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 2rem;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 1rem;
+}
+
+.login-footer p {
+    color: #64748b;
+    font-size: 0.75rem;
+    margin: 0;
+}
