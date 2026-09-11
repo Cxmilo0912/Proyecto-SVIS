@@ -12,6 +12,7 @@ import java.util.List;
  * @author julil
  */
 public interface OpcionesEncuestaRepositorio {
-    List<OpcionesEncuesta> ListarPorEncuesta();
-    OpcionesEncuestaRepositorio Crear();
+    List<OpcionesEncuesta> ListarPorEncuesta(int IdEncuesta);
+    void ActualizarConteoVotos(int IdOpcion);
+   
 }

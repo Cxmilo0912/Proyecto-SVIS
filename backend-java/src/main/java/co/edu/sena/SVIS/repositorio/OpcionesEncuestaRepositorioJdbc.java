@@ -4,10 +4,55 @@
  */
 package co.edu.sena.SVIS.repositorio;
 
+import co.edu.sena.SVIS.model.Jornada;
+import co.edu.sena.SVIS.model.OpcionesEncuesta;
+import co.edu.sena.SVIS.util.ConexionDB;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author julil
  */
-public class OpcionesEncuestaRepositorioJdbc {
-    
+public class OpcionesEncuestaRepositorioJdbc implements OpcionesEncuestaRepositorio {
+
+    @Override
+    public List<OpcionesEncuesta> ListarPorEncuesta(int IdEncuesta) {
+        String sql = "Select * From opcionesencuesta where IdEncuesta = ?";
+        List<OpcionesEncuesta> lista = new ArrayList<>();
+        try (Connection c = ConexionDB.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, IdEncuesta);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    OpcionesEncuesta oOpciones = new OpcionesEncuesta();
+                    oOpciones.setId(rs.getInt("Id"));
+                    oOpciones.setOpcion(rs.getString("Opcion"));
+                    oOpciones.setVotosAcumulados(rs.getInt("VotosAcumulados"));
+
+                    lista.add(oOpciones);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al consultar las opciones", e);
+        }
+        return lista;
+    }
+
+    @Override
+    public void ActualizarConteoVotos(int IdOpcion) {
+        String sql = "update opcionesencuesta set VotosAcumulado=VotosAcumulados+1 where Id=?";
+
+        try (Connection c = ConexionDB.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setInt(1, IdOpcion);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al consultar las opciones", e);
+        }
+
+    }
+
 }
