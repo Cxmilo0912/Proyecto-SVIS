@@ -12,10 +12,11 @@ import java.util.List;
  * @author julil
  */
 public interface EncuestaRepositorio {
-    List<Encuesta> ListarPorJornada(int id);
-    Encuesta Crear(Encuesta encuesta);
+    List<Encuesta> ListarPorJornada(int IdJornada);
+    void Crear(Encuesta encuesta,String Opciones );
     List<Encuesta> ListarTodas();
-    Encuesta Editar(Encuesta encuesta);
+    void Editar(Encuesta encuesta,String OpcionesActualizadas);
+    List<Encuesta> ListarEncuesta(int IdEncuesta);
     
     
 }
