@@ -13,14 +13,13 @@ import co.edu.sena.SVIS.model.Rol;
  */
 public class UsuarioView {
 
-    private int Id;
-    private String Documento;
-    private String Nombre;
-    private String Apellido;
-    private String Email;
-    private String Celular;
-    private String Contrasena;
-    private String Rol;
-    private String Jornada;
+    public int Id;
+    public String Documento;
+    public String Nombre;
+    public String Apellido;
+    public String Email;
+    public String Celular;
+    public String Rol;
+    public String Jornada;
 
 }

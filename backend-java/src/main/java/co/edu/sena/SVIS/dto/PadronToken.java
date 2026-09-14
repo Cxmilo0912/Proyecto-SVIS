@@ -4,14 +4,15 @@
  */
 package co.edu.sena.SVIS.dto;
 
+import java.util.List;
+
 /**
  *
  * @author julil
  */
-public class TokenView {
-    
-    public int Id;
-    public String Token;
-    
-    
+public class PadronToken {
+
+    public int idEncuesta;
+    public List<Integer> idsUsuariosHabilitados;
+
 }

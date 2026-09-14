@@ -16,7 +16,6 @@ import java.util.List;
 public interface TokensRepositorio {
    void Crear(List<Token> tokens);
    Token MtBuscarYBloquear(Connection cn, Token oToken);
-   void MtMarcarComoUsado(int idToken);
-   boolean MtEmitirVoto();
+   void MtMarcarComoUsado(Connection cn, int idToken);
    String MtBuscarTokenUsuario(int idEncuesta, int idUsuario);
 }

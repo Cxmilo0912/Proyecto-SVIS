@@ -62,6 +62,7 @@ public class TokensRepositorioJdbc implements TokensRepositorio {
                     token.setId(rs.getInt("Id"));
                     token.setToken(rs.getString("Token"));
                     token.setEstado(rs.getString("Estado"));
+                    token.setFechaExpiracion(rs.getObject("FechaExpiracion", LocalDateTime.class));
 
                     return token;
                 }
@@ -76,30 +77,21 @@ public class TokensRepositorioJdbc implements TokensRepositorio {
     }
 
     @Override
-    public void MtMarcarComoUsado(int idToken) {
+    public void MtMarcarComoUsado(Connection cn, int idToken) { // Recibe la conexión activa
+        String sql = "UPDATE tokens SET Estado = 'Usado', FechaUso = NOW() WHERE Id = ?";
 
-        String sql = "Update tokens set Estado = 'Usado', FechaUso = NOW() Where Id = ? ";
-
-        try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
-
+        try (PreparedStatement ps = cn.prepareStatement(sql)) { // Usa la conexión de la transacción
             ps.setInt(1, idToken);
             ps.executeUpdate();
-
         } catch (Exception e) {
-
-            throw new RuntimeException("No se pudo realizar la actualización del voto", e);
+            throw new RuntimeException("No se pudo realizar la actualización del token", e);
         }
-    }
-
-    @Override
-    public boolean MtEmitirVoto() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public String MtBuscarTokenUsuario(int idEncuesta, int idUsuario) {
 
-        String sql = "Select Token From tokens Where IdEncuesta = ?, IdUsuario = ?";
+        String sql = "Select Token From tokens Where IdEncuesta = ? and IdUsuario = ?";
 
         String token = "";
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
@@ -112,15 +104,15 @@ public class TokensRepositorioJdbc implements TokensRepositorio {
                 if (rs.next()) {
                     token = rs.getString("Token");
                 }
-                
+
             }
 
         } catch (Exception e) {
-            
+
             throw new RuntimeException("Error al obtener el token para la encuesta", e);
-            
+
         }
-        
+
         return token;
 
     }
