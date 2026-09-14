@@ -10,9 +10,10 @@ package co.edu.sena.SVIS.dto;
  */
 public class EncuestaRequest {
    
+    public int Id;
     public String Titulo;
     public String Descripcion;
-    private String Estado;
+    public String Estado;
     public int IdJornada;
     public  String Opciones;
     
