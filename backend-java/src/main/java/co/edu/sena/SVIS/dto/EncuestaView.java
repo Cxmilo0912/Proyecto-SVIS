@@ -15,4 +15,5 @@ public class EncuestaView {
     private String Descripcion;
     private String Estado;
     private String Jornada;
+    
 }
