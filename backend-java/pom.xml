@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>co.edu.sena.cimm</groupId>
-    <artifactId>eventos-qr</artifactId>
+    <artifactId>SVIS</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
 

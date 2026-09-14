@@ -21,6 +21,32 @@ public class EncuestaServlet extends BaseApiServlet {
     private final EncuestaService encuestaService = AppContext.get().getEncuestaService();
 
     @Override
+    protected void doGet(HttpServletRequest req,HttpServletResponse resp)throws IOException{
+        try{
+            String path = req.getPathInfo();
+            String jornadaParam = req.getParameter("jornada");
+            
+            if(jornadaParam != null && !jornadaParam.trim().isEmpty()){
+                int idJornada = Integer.parseInt(jornadaParam);
+                writeJson(resp,200,encuestaService.MtListarPorJornada(idJornada));
+            }
+            else if(path == null  || path.equals("/")){
+                writeJson(resp,200,encuestaService.MtListarTodas());
+            }
+            else{
+                int idEncuesta = Integer.parseInt(path.substring(1));
+                writeJson(resp,200,encuestaService.MtListarEncuesta(idEncuesta));
+            }
+        }
+        catch (NumberFormatException ex) {
+            writeJson(resp, 400, new ApiError("BAD_REQUEST", "El ID o parámetro numérico no es válido"));
+        } catch (IllegalArgumentException ex) {
+            writeJson(resp, 404, new ApiError("NOT_FOUND", ex.getMessage()));
+        } catch (Exception ex) {
+            writeJson(resp, 500, new ApiError("INTERNAL_ERROR", "Error en el servidor: " + ex.getMessage()));
+        }
+    }
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             String path = req.getPathInfo(); 

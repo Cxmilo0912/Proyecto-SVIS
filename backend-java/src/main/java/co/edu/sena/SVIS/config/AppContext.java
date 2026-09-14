@@ -1,5 +1,6 @@
 package co.edu.sena.SVIS.config;
 
+import co.edu.sena.SVIS.model.OpcionesEncuesta;
 import co.edu.sena.SVIS.repositorio.EncuestaRepositorio;
 import co.edu.sena.SVIS.repositorio.EncuestaRepositorioJdbc;
 import co.edu.sena.SVIS.repositorio.RolRepositorio;
@@ -12,6 +13,12 @@ import co.edu.sena.SVIS.service.EncuestaService;
 import co.edu.sena.SVIS.service.RolService;
 import co.edu.sena.SVIS.service.TokenService;
 import co.edu.sena.SVIS.service.UsuarioService;
+import co.edu.sena.SVIS.repositorio.JornadaRepositorio;
+import co.edu.sena.SVIS.repositorio.JornadaRepositorioJdbc;
+import co.edu.sena.SVIS.repositorio.OpcionesEncuestaRepositorio;
+import co.edu.sena.SVIS.repositorio.OpcionesEncuestaRepositorioJdbc;
+import co.edu.sena.SVIS.service.EncuestaService;
+import co.edu.sena.SVIS.service.JornadaService;
 
 /**
  * @author Admin
@@ -24,6 +31,7 @@ public class AppContext {
     private final UsuarioService usuarioService;
     private final RolService rolService;
     private final TokenService tokenService;
+    private final JornadaService jornadaService;
     
    
     private AppContext() {
@@ -38,6 +46,12 @@ public class AppContext {
         this.usuarioService = new UsuarioService(usuarioRepositorio);
         this.rolService = new RolService(rolRepositorio);
         this.tokenService = new TokenService(tokenRepositorio);
+        OpcionesEncuestaRepositorio opcionesRepo = new OpcionesEncuestaRepositorioJdbc();
+        JornadaRepositorio jornadaRepo = new JornadaRepositorioJdbc();
+        
+        
+        this.encuestaService = new EncuestaService(encuestaRepo,opcionesRepo);
+        this.jornadaService = new JornadaService(jornadaRepo);
     }
     
     public static AppContext get() {
@@ -58,4 +72,10 @@ public class AppContext {
     public TokenService getTokenService(){
         return tokenService;
     }
+
+    public JornadaService getJornadaService() {
+        return jornadaService;
+    }
+    
+    
 }
