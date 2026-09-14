@@ -14,7 +14,9 @@
         <nav class="nav-links">
             <?php if(is_admin()):?>
                 <a href="dashboard.php">Panel Principal</a>
-                <a href="admin-tokens.php">Padrones OTP</a>
+                <a href="admin-crear-encuesta.php">Encuestas</a>
+                <a href="admin-usuarios.php">Usuarios</a>
+                <a href="admin-tokens.php">Tokens</a>
                 <a href="admin-reportes.php">Reportes</a>
             <?php else: ?>
                 <a href="votar-dashboard.php">Consultas Activas</a>
