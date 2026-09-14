@@ -8,12 +8,12 @@ package co.edu.sena.SVIS.dto;
  *
  * @author Admin
  */
-public class EncuestaRequest {
-   
-    public String Titulo;
-    public String Descripcion;
-    private String Estado;
-    public int IdJornada;
-    public  String Opciones;
-    
+public class ApiError {
+     public String error;
+    public String mensaje;
+
+    public ApiError(String error, String mensaje) {
+        this.error = error;
+        this.mensaje = mensaje;
+    }
 }
