@@ -10,7 +10,7 @@ package co.edu.sena.SVIS.dto;
  */
 public class RolView {
     
-    private int Id;
-    private String Nombre;
+    public int Id;
+    public String Nombre;
     
 }

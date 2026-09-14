@@ -5,7 +5,6 @@
 package co.edu.sena.SVIS.service;
 
 import co.edu.sena.SVIS.dto.EncuestaRequest;
-import co.edu.sena.SVIS.dto.EncuestaView;
 import co.edu.sena.SVIS.model.Encuesta;
 import co.edu.sena.SVIS.model.Jornada;
 import co.edu.sena.SVIS.repositorio.EncuestaRepositorio;

@@ -4,8 +4,6 @@
  */
 package co.edu.sena.SVIS.dto;
 
-import co.edu.sena.SVIS.model.Jornada;
-import co.edu.sena.SVIS.model.Rol;
 
 /**
  *
@@ -13,13 +11,13 @@ import co.edu.sena.SVIS.model.Rol;
  */
 public class UsuarioRequest {
     
-    private String Documento;
-    private String Nombre;
-    private String Apellido;
-    private String Email;
-    private String Celular;
-    private String Contrasena;
-    private int idRol;
-    private int idJornada;
+    public String Documento;
+    public  String Nombre;
+    public String Apellido;
+    public String Email;
+    public String Celular;
+    public String Contrasena;
+    public int idRol;
+    public int idJornada;
     
 }

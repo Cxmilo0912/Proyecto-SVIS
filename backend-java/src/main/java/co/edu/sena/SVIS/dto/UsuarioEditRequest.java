@@ -4,19 +4,18 @@
  */
 package co.edu.sena.SVIS.dto;
 
-
-import java.time.LocalDateTime;
-
 /**
  *
  * @author julil
  */
-public class TokenRequest {
+public class UsuarioEditRequest {
 
-    private int Id;
-    private int idEncuesta;
-    private int idUsuario;
-    private String Token;
-    private LocalDateTime FechaExpiracion;
+    public int Id;
+    public String Documento;
+    public String Nombre;
+    public String Apellido;
+    public String Email;
+    public String Celular;
+    public int idJornada;
 
 }
