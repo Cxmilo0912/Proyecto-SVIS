@@ -24,58 +24,54 @@ import co.edu.sena.SVIS.service.JornadaService;
  * @author Admin
  */
 public class AppContext {
-    
+
     private static final AppContext INSTANCE = new AppContext();
-    
+
     private final EncuestaService encuestaService;
     private final UsuarioService usuarioService;
     private final RolService rolService;
     private final TokenService tokenService;
     private final JornadaService jornadaService;
-    
-   
+
     private AppContext() {
-        
+
         EncuestaRepositorio encuestaRepo = new EncuestaRepositorioJdbc();
         UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorioJdbc();
         RolRepositorio rolRepositorio = new RolRepositorioJdbc();
         TokensRepositorio tokenRepositorio = new TokensRepositorioJdbc();
-        
-        
-        this.encuestaService = new EncuestaService(encuestaRepo);
+
+        OpcionesEncuestaRepositorio opcionesRepo = new OpcionesEncuestaRepositorioJdbc();
+        JornadaRepositorio jornadaRepo = new JornadaRepositorioJdbc();
+
         this.usuarioService = new UsuarioService(usuarioRepositorio);
         this.rolService = new RolService(rolRepositorio);
         this.tokenService = new TokenService(tokenRepositorio);
-        OpcionesEncuestaRepositorio opcionesRepo = new OpcionesEncuestaRepositorioJdbc();
-        JornadaRepositorio jornadaRepo = new JornadaRepositorioJdbc();
-        
-        
-        this.encuestaService = new EncuestaService(encuestaRepo,opcionesRepo);
+        this.encuestaService = new EncuestaService(encuestaRepo, opcionesRepo);
         this.jornadaService = new JornadaService(jornadaRepo);
     }
-    
+
     public static AppContext get() {
         return INSTANCE;
     }
-    
+
     public EncuestaService getEncuestaService() {
         return encuestaService;
     }
-    
-    public UsuarioService getUsuarioService(){
+
+    public UsuarioService getUsuarioService() {
         return usuarioService;
     }
-    
-    public RolService getRolService(){
+
+    public RolService getRolService() {
         return rolService;
     }
-    public TokenService getTokenService(){
+
+    public TokenService getTokenService() {
         return tokenService;
     }
 
     public JornadaService getJornadaService() {
         return jornadaService;
     }
-    
-    
+
 }
