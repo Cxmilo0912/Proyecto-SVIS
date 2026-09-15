@@ -12,9 +12,9 @@ $idEditar = isset($_GET['id']) ? (int) $_GET['id']:null;
 $encuestaActual = null;
 
 if ($idEditar) {
-    $resOne = api()->get('/encuestas/' . $idEditar);
-    if (!empty($resOne['ok']) && !empty($resOne['data'])) {
-        $encuestaActual = $resOne['data'];
+    $resOne = api()->get('/api/encuestas/' . $idEditar);
+    if (!empty($resOne['ok']) && !empty($resOne['data']) && is_array($resOne['data'])) {
+        $encuestaActual = $resOne['data'][0] ?? null;  
     }
 }
 
@@ -57,7 +57,7 @@ $esEdicion = !empty($idEditar) && !empty($encuestaActual);
                             <select id="jornada" name="jornada" required style="padding: 0.85rem;">
                                 <option value="" disabled <?= empty($valJornada) ? 'selected' : '' ?>>Seleccione...</option>                                
                                 <?php
-                                $resJornadas = api()->get('/jornadas');
+                                $resJornadas = api()->get('/api/jornadas');
                                 if(!empty($resJornadas['ok']) && !empty($resJornadas['data'])){
                                     foreach($resJornadas['data'] as $j){
                                         $idJ = h($j['id'] ?? $j['Id'] ?? '');
@@ -126,7 +126,7 @@ document.getElementById('formEncuesta').addEventListener('submit', async functio
     }
 
     try {
-        const apiUrl = 'http://localhost:8080/api/encuestas'; 
+        const apiUrl = 'http://localhost:8080/backend-java/api/encuestas'; 
         const methodHttp = 'POST';
 
         const response = await fetch(apiUrl, {
