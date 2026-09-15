@@ -40,7 +40,7 @@ public class EncuestaRepositorioJdbc implements EncuestaRepositorio {
 
     @Override
     public List<Encuesta> ListarEncuesta(int IdEncuesta) {
-         String sql = "Select e.Id,e.Titulo,e.Descripcion,e.Estado,j.Nombre From encuesta e Inner Join jornada j on e.IdJornada = j.Id Where IdJornada = ?";
+         String sql = "Select e.Id,e.Titulo,e.Descripcion,e.Estado,j.Nombre From encuesta e Inner Join jornada j on e.IdJornada = j.Id Where e.Id = ?";
         List<Encuesta> lista = new ArrayList<>();
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, IdEncuesta);
@@ -79,11 +79,11 @@ public class EncuestaRepositorioJdbc implements EncuestaRepositorio {
         oEncuesta.setId(rs.getInt("Id"));
         oEncuesta.setTitulo(rs.getString("Titulo"));
         oEncuesta.setDescripcion(rs.getString("Descripcion"));
+         oEncuesta.setEstado(rs.getString("Estado")); 
         if (oEncuesta.getJornada() == null) {
             oEncuesta.setJornada(new Jornada());
         }
-        oEncuesta.getJornada().setNombre("Nombre");
-
+        oEncuesta.getJornada().setNombre(rs.getString("Nombre"));
         return oEncuesta;
     }
 

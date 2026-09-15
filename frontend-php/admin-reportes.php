@@ -7,7 +7,7 @@ $msg = null;
 $err = null;
 
 
-$lista = api()->get('/encuestas');
+$lista = api()->get('/api/encuestas');
 require __DIR__ . '/includes/header.php';
 
 ?>

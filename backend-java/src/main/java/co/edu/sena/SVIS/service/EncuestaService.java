@@ -66,6 +66,7 @@ public class EncuestaService {
             vista.setTitulo(e.getTitulo());
             vista.setDescripcion(e.getDescripcion());
             vista.setEstado(e.getEstado());
+            vista.setJornada(e.getJornada() != null ? e.getJornada().getNombre() : null);
             listaVista.add(vista);
         }
         return listaVista;
@@ -80,6 +81,7 @@ public class EncuestaService {
             vista.setTitulo(e.getTitulo());
             vista.setDescripcion(e.getDescripcion());
             vista.setEstado(e.getEstado());
+            vista.setJornada(e.getJornada() != null ? e.getJornada().getNombre() : null);
             
             List<OpcionesEncuesta> listaModelosOpciones = opcionesEncuestaRepositorio.ListarPorEncuesta(vista.getId());
 
@@ -109,6 +111,7 @@ public class EncuestaService {
             vista.setTitulo(e.getTitulo());
             vista.setDescripcion(e.getDescripcion());
             vista.setEstado(e.getEstado());
+            vista.setJornada(e.getJornada() != null ? e.getJornada().getNombre() : null);
 
             List<OpcionesEncuesta> listaModelosOpciones = opcionesEncuestaRepositorio.ListarPorEncuesta(vista.getId());
 

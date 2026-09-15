@@ -7,7 +7,7 @@ $msg = null;
 $err = null;
 
 
-$lista = api()->get('/encuestas');
+$lista = api()->get('/api/encuestas');
 require __DIR__ . '/includes/header.php';
 
 ?>
@@ -42,6 +42,7 @@ require __DIR__ . '/includes/header.php';
                             </tr>
                         </thead>
                         <tbody>
+                    
                             <?php foreach ($lista['data']as $e): ?>
                             <tr style="border-bottom: 1px solid #f1f5f9;">
                                 <td style="padding: 0.85rem; font-weight: 600;"><?= (int) $e['Id'] ?></td>
@@ -56,6 +57,7 @@ require __DIR__ . '/includes/header.php';
                         </tbody>
                     </table>
                 </div>
+                <?php endif; ?>
             </div>
         </section>
     </main>
