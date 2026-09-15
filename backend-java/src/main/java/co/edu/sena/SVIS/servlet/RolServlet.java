@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * GET /api/eventos -> lista de roles para la creacion de un usuario
  */
-@WebServlet("/api//*")
+@WebServlet("/api/roles")
 public class RolServlet extends BaseApiServlet {
 
     private final RolService rolService = AppContext.get().getRolService();

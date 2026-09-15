@@ -35,7 +35,7 @@ function is_admin()
 
 function logout()
 {
-    $_SESSION['user'] = null;
-    unset($_SESSION['user']);
+    $_SESSION['usuario'] = null;
+    unset($_SESSION['usuario']);
     session_destroy();
 }

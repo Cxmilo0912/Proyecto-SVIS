@@ -24,7 +24,7 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
     @Override
     public List<Usuario> ListarUsuarios() {
 
-        String sql = "Select u.Id, u.Documento, u.Nombre, u.Apellido, u.Email, u.Celular, r.Nombre as NombreRol, j.Jornada as NombreJornada From usuario u "
+        String sql = "Select u.Id, u.Documento, u.Nombre, u.Apellido, u.Email, u.Celular, r.Nombre as NombreRol, j.Nombre as NombreJornada From usuario u "
                 + "Inner Join rol r "
                 + "ON "
                 + "u.IdRol = r.Id "
@@ -67,7 +67,7 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
     @Override
     public void Crear(Usuario usuario) {
 
-        String sql = "Inser into usuario(Documento, Nombre, Apellido, Email, Celular, Contraseña, IdRol, IdJornada) "
+        String sql = "Insert into usuario(Documento, Nombre, Apellido, Email, Celular, Contraseña, IdRol, IdJornada) "
                 + "Values(?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
@@ -104,9 +104,8 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
             ps.setInt(7, usuario.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-
-            throw new RuntimeException("No se pudo actualizar la informacion del usuario ", e);
-        }
+    throw new RuntimeException("No se pudo actualizar la informacion del usuario: ", e);
+}
     }
 
     @Override
@@ -146,8 +145,7 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("No se pudo obtener la informacion del usuario para su validacion: "
-                    + e.getClass().getSimpleName() + " - " + e.getMessage(), e);
+            throw new RuntimeException("No se pudo obtener la informacion del usuario para su validacion: ", e);
         }
         return oUsuario;
 
