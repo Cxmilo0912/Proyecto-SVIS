@@ -19,11 +19,6 @@ function login($usuario, $password){
         'Contrasena' => $password
     ]);
 
-    echo "<pre>";
-    print_r($resp);
-    echo "</pre>";
-    exit();
-
     if($resp['ok']){
 
     $_SESSION['usuario'] = $resp['data'];

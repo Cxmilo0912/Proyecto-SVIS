@@ -112,7 +112,7 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
     @Override
     public Usuario ValidarCredenciales(String email) {
 
-        String sql = "Select u.Id, u.Documento, u.Nombre, u.Apellido, u.Email, u.Celular, u.Contraseña r.Nombre as NombreRol, j.Jornada as NombreJornada From usuario u "
+        String sql = "Select u.Documento, u.Nombre, u.Apellido, u.Email, u.Celular, u.Contraseña, r.Nombre as NombreRol, j.Nombre as NombreJornada From usuario u "
                 + "Inner Join rol r "
                 + "ON "
                 + "u.IdRol = r.Id "
@@ -129,12 +129,13 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    oUsuario.setId(rs.getInt("Id"));
+                    oUsuario = new Usuario();
                     oUsuario.setDocumento(rs.getString("Documento"));
                     oUsuario.setNombre(rs.getString("Nombre"));
                     oUsuario.setApellido(rs.getString("Apellido"));
                     oUsuario.setEmail(rs.getString("Email"));
                     oUsuario.setCelular(rs.getString("Celular"));
+                    oUsuario.setContrasena(rs.getString("Contraseña"));
                     Rol oRol = new Rol();
                     oRol.setNombre(rs.getString("NombreRol"));
                     Jornada oJornada = new Jornada();
@@ -145,9 +146,9 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
             }
 
         } catch (Exception e) {
-
-            throw new RuntimeException("No se pudo obtener la informacion del usuario para su validacion", e);
-        }
+    throw new RuntimeException("No se pudo obtener la informacion del usuario para su validacion: " 
+        + e.getClass().getSimpleName() + " - " + e.getMessage(), e);
+}
         return oUsuario;
 
     }
