@@ -20,20 +20,18 @@ function db()
 
 function current_user()
 {
-    return $_SESSION['user'] ?? null;
+    return $_SESSION['usuario'] ?? null;
 }
 
 function is_logged_in()
 {
     return !empty($_SESSION['user']);
 }
-
 function is_admin()
 {
     $u = current_user();
-    return $u && ($u['rol'] ?? '') === 'Administrador';
+    return $u && (($u['Rol']['Nombre'] ?? '') === 'Administrador');
 }
-
 
 function logout()
 {
