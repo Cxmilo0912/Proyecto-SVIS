@@ -1,30 +1,16 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal del Votante - SVIS</title>
-    <link rel="stylesheet" href="assets/css/admin.css">
-</head>
-<body>
-    <!-- Navbar Superior unificada -->
-    <header class="top-navbar">
-        <div class="nav-brand">
-            <h2>SVIS <span>Portal del Votante</span></h2>
-        </div>
-        <nav class="nav-links">
-            <a href="votar-dashboard.html" class="active">Consultas Activas</a>
-            <a href="#">Historial y Recibos</a>
-        </nav>
-        <div class="nav-actions">
-            <span class="user-role-tag">Estudiante Votante</span>
-            <a href="login.html" class="btn-logout">Cerrar Sesión</a>
-        </div>
-    </header>
+<?php
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/includes/ApiClient.php';
 
-    <!-- Contenido Principal -->
-    <main class="main-container">
-        <!-- Sección 1: Encuestas Activas Disponibles -->
+$titulo = 'Crear Encuesta';
+$msg = null;
+$err = null;
+
+
+$lista = api()->get('/encuestas');
+require __DIR__ . '/includes/header.php';
+
+?>
         <section class="section-block">
             <div class="section-header">
                 <h2>Votaciones y Consultas Vigentes</h2>
@@ -32,7 +18,7 @@
             </div>
             
             <div class="dashboard-grid" style="grid-template-columns: 1fr;">
-                <!-- Tarjeta de Encuesta Activa -->
+            
                 <div class="card" style="background-color: var(--bg-card);">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
                         <div>

@@ -146,11 +146,12 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
             }
 
         } catch (Exception e) {
-    throw new RuntimeException("No se pudo obtener la informacion del usuario para su validacion: " 
-        + e.getClass().getSimpleName() + " - " + e.getMessage(), e);
-}
+            throw new RuntimeException("No se pudo obtener la informacion del usuario para su validacion: "
+                    + e.getClass().getSimpleName() + " - " + e.getMessage(), e);
+        }
         return oUsuario;
 
     }
+    
 
 }

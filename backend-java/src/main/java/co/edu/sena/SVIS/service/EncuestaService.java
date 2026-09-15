@@ -80,6 +80,21 @@ public class EncuestaService {
             vista.setTitulo(e.getTitulo());
             vista.setDescripcion(e.getDescripcion());
             vista.setEstado(e.getEstado());
+            
+            List<OpcionesEncuesta> listaModelosOpciones = opcionesEncuestaRepositorio.ListarPorEncuesta(vista.getId());
+
+
+            List<OpcionesEncuestaView> opcionesTexto = new ArrayList<>();
+
+            for (OpcionesEncuesta opModel : listaModelosOpciones) {
+                OpcionesEncuestaView opView = new OpcionesEncuestaView();
+                opView.setId(opModel.getId());
+                opView.setOpcion(opModel.getOpcion());
+                opView.setVotosAcumulados(opModel.getVotosAcumulados());
+                opcionesTexto.add(opView);
+            }
+            vista.setOpciones(opcionesTexto);
+            
             listaVista.add(vista);
         }
         return listaVista;
