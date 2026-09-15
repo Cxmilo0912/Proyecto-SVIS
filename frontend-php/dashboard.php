@@ -1,30 +1,15 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard General - SVIS</title>
-    <link rel="stylesheet" href="assets/css/admin.css">
-</head>
-<body>
-    <header class="top-navbar">
-        <div class="nav-brand">
-            <h2>SVIS <span>Gestión Electoral</span></h2>
-        </div>
-        <nav class="nav-links">
-            <a href="dashboard.html" class="active">Métricas Generales</a>
-            <a href="admin-crear-encuesta.html">Crear Encuesta</a>
-            <a href="admin-tokens.html">Padrones OTP</a>
-            <a href="admin-reportes.html">Reportes</a>
-        </nav>
-        <div class="nav-actions">
-            <span class="user-role-tag">Administrador</span>
-            <a href="login.html" class="btn-logout">Cerrar Sesión</a>
-        </div>
-    </header>
+<?php
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/includes/ApiClient.php';
 
-    <main class="main-container">
-        <!-- Sección de Resumen / KPIs Globales -->
+$titulo = 'Dashboard Admin';
+$msg = null;
+$err = null;
+
+
+require __DIR__ . '/includes/header.php';
+
+?>
         <section class="section-block">
             <div class="section-header">
                 <h2>Indicadores Generales del Sistema</h2>

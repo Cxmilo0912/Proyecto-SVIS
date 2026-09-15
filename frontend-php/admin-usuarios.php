@@ -1,37 +1,15 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Usuarios - SVIS</title>
-    <link rel="stylesheet" href="assets/css/admin.css">
-</head>
-<body>
-    <!-- Navbar con Icono y Nombre del Administrador -->
-    <header class="top-navbar">
-        <div class="nav-brand" style="display: flex; align-items: center; gap: 0.75rem;">
-            <span style="font-size: 1.4rem; background: rgba(52, 211, 153, 0.15); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">🛡️</span>
-            <div>
-                <h2 style="margin: 0; line-height: 1.2; font-size: 1rem;">Admin. Carlos Pérez</h2>
-                <span style="font-size: 0.75rem; color: #34d399; font-weight: 500;">Gestión Electoral SVIS</span>
-            </div>
-        </div>
-        
-        <nav class="nav-links">
-            <a href="dashboard.html">Métricas Generales</a>
-            <a href="admin-crear-encuesta.html">Crear Encuesta</a>
-            <a href="admin-tokens.html">Padrones OTP</a>
-            <a href="admin-usuarios.html" class="active">Usuarios</a>
-            <a href="admin-reportes.html">Reportes</a>
-        </nav>
-        
-        <div class="nav-actions">
-            <span class="user-role-tag">Administrador</span>
-            <a href="login.html" class="btn-logout">Cerrar Sesión</a>
-        </div>
-    </header>
+<?php
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/includes/ApiClient.php';
 
-    <main class="main-container">
+$titulo = 'Crear Encuesta';
+$msg = null;
+$err = null;
+
+
+require __DIR__ . '/includes/header.php';
+
+?>
         <section class="section-block">
             <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end;">
                 <div>

@@ -1,30 +1,15 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emisión de Sufragio - SVIS</title>
-    
-    <link rel="stylesheet" href="assets/css/admin.css">
-</head>
-<body>
-    <!-- Navbar Superior unificada -->
-    <header class="top-navbar">
-        <div class="nav-brand">
-            <h2>SVIS <span>Portal del Votante</span></h2>
-        </div>
-        <nav class="nav-links">
-            <a href="votar-dashboard.html">Consultas Activas</a>
-            <a href="#" class="active">Emisión de Sufragio</a>
-        </nav>
-        <div class="nav-actions">
-            <span class="user-role-tag">Estudiante Votante</span>
-            <a href="login.html" class="btn-logout">Cerrar Sesión</a>
-        </div>
-    </header>
+<?php
+require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/includes/ApiClient.php';
 
-    <!-- Contenido Principal -->
-    <main class="main-container">
+$titulo = 'Crear Encuesta';
+$msg = null;
+$err = null;
+
+
+require __DIR__ . '/includes/header.php';
+
+?>
         <section class="section-block" style="max-width: 800px; margin: 0 auto;">
             <div class="section-header">
                 <h2>Emisión de Sufragio Seguro</h2>
