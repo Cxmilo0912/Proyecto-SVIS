@@ -15,5 +15,5 @@ public interface UsuarioRepositorio {
     List<Usuario> ListarUsuarios();
     void Crear(Usuario usuario);
     void Editar(Usuario usuario);
-    String ValidarCredenciales(String email);
+    Usuario ValidarCredenciales(String email);
 }
