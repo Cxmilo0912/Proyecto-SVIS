@@ -28,26 +28,34 @@ public class TokenServlet extends BaseApiServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-
-        String idEncuestaStr = req.getParameter("idEncuesta");
-        String idUsuarioStr = req.getParameter("idUsuario");
         try {
             String path = req.getPathInfo();
-            if (path == null || path.equals("/")) {
-            } else {
-                int idEncuesta = Integer.parseInt(idEncuestaStr);
-                int idUsuario = Integer.parseInt(idUsuarioStr);
 
-                writeJson(resp, 200, tokenService.MtBuscarTokenUsuario(idEncuesta, idUsuario));
+            String idEncuestaStr = req.getParameter("idEncuesta");
+            String idUsuarioStr = req.getParameter("idUsuario");
+
+            if (idEncuestaStr == null || idUsuarioStr == null || idEncuestaStr.isEmpty() || idUsuarioStr.isEmpty()) {
+                writeJson(resp, 400, new ApiError("BAD_REQUEST", "Faltan los parámetros idEncuesta e idUsuario"));
+                return;
+            }
+
+            int idEncuesta = Integer.parseInt(idEncuestaStr);
+            int idUsuario = Integer.parseInt(idUsuarioStr);
+
+            String token = tokenService.MtBuscarTokenUsuario(idEncuesta, idUsuario);
+
+            if (token != null) {
+                writeJson(resp, 200, token);
+            } else {
+                writeJson(resp, 404, new ApiError("NOT_FOUND", "No se encontró un token asignado para este usuario en la encuesta."));
             }
         } catch (NumberFormatException ex) {
-            writeJson(resp, 400, new ApiError("BAD_REQUEST", "No se pudo obtener el token de la encuesta"));
+            writeJson(resp, 400, new ApiError("BAD_REQUEST", "Los identificadores numéricos no son válidos"));
         } catch (IllegalArgumentException ex) {
             writeJson(resp, 400, new ApiError("BAD_REQUEST", ex.getMessage()));
         } catch (Exception ex) {
             writeJson(resp, 500, new ApiError("INTERNAL_ERROR", "Error en el servidor: " + ex.getMessage()));
         }
-
     }
 
     @Override
@@ -70,7 +78,7 @@ public class TokenServlet extends BaseApiServlet {
                 PadronToken padronTokenDto = JsonUtil.fromJson(jsonBody, PadronToken.class);
 
                 if (padronTokenDto == null || padronTokenDto.idsUsuariosHabilitados == null || padronTokenDto.idsUsuariosHabilitados.isEmpty()) {
-                    writeJson(resp, 400, new ApiError("BAD_REQUEST", "L alista de usuarios esta vacia"));
+                    writeJson(resp, 400, new ApiError("BAD_REQUEST", "La lista de usuarios esta vacia"));
                     return;
                 }
 
