@@ -110,11 +110,18 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
     }
 
     @Override
-    public String ValidarCredenciales(String email) {
+    public Usuario ValidarCredenciales(String email) {
 
-        String sql = "Select Contraseña From usuario Where Email = ?";
+        String sql = "Select u.Id, u.Documento, u.Nombre, u.Apellido, u.Email, u.Celular, u.Contraseña r.Nombre as NombreRol, j.Jornada as NombreJornada From usuario u "
+                + "Inner Join rol r "
+                + "ON "
+                + "u.IdRol = r.Id "
+                + "Inner Join jornada j "
+                + "ON "
+                + "u.IdJornada = j.Id "
+                + "Where u.Email = ? ";
 
-        String contrasenaUsuario = "";
+        Usuario oUsuario = null;
 
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
 
@@ -122,19 +129,27 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    contrasenaUsuario = rs.getString("Contrasena");
+                    oUsuario.setId(rs.getInt("Id"));
+                    oUsuario.setDocumento(rs.getString("Documento"));
+                    oUsuario.setNombre(rs.getString("Nombre"));
+                    oUsuario.setApellido(rs.getString("Apellido"));
+                    oUsuario.setEmail(rs.getString("Email"));
+                    oUsuario.setCelular(rs.getString("Celular"));
+                    Rol oRol = new Rol();
+                    oRol.setNombre(rs.getString("NombreRol"));
+                    Jornada oJornada = new Jornada();
+                    oJornada.setNombre(rs.getString("NombreJornada"));
+                    oUsuario.setRol(oRol);
+                    oUsuario.setJornada(oJornada);
                 }
             }
 
         } catch (Exception e) {
-            
+
             throw new RuntimeException("No se pudo obtener la informacion del usuario para su validacion", e);
         }
-        return contrasenaUsuario;
-
+        return oUsuario;
 
     }
-    
-   
 
 }

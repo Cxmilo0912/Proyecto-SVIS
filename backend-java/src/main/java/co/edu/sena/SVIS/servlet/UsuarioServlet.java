@@ -16,8 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * GET /api/usuarios -> lista de usuarios} POST /api/usuarios/{id} -> edita un
- * usuario POST /api/usuarios -> crea un usuario
+ * GET /api/usuarios -> lista de usuarios} 
+ * POST /api/usuarios/{id} -> edita un usuario 
+ * POST /api/usuarios -> crea un usuario
+ * POST /api/usuarios {email} & {password}
  */
 @WebServlet("/api/usuarios/*")
 public class UsuarioServlet extends BaseApiServlet {
@@ -60,7 +62,7 @@ public class UsuarioServlet extends BaseApiServlet {
                 requestEditDto.Id = id;
                 usuarioService.MtEditar(requestEditDto);
                 writeJson(resp, 200, new MensajeRespuesta("Usuario actualizado exitosamente"));
-            }
+            } 
 
         } catch (NumberFormatException ex) {
             writeJson(resp, 400, new ApiError("BAD_REQUEST", "El ID del usuario no es válido"));

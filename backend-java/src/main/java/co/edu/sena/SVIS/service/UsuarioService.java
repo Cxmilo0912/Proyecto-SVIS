@@ -75,17 +75,20 @@ public class UsuarioService {
 
     }
 
-    public boolean validarCredenciales(String email, String contrasenaIngresada) {
+    public Usuario validarCredenciales(String email, String contrasenaIngresada) {
 
-        String contrasena = usuarioRepositorio.ValidarCredenciales(email);
+        Usuario oUser = usuarioRepositorio.ValidarCredenciales(email);
 
-        if (contrasena == null || contrasena.isEmpty()) {
-            return false;
+        if (oUser == null) {
+            return null;
         }
+        boolean contrasenaValidada = BCrypt.checkpw(contrasenaIngresada, oUser.getContrasena());
 
-        boolean contrasenaValidada = BCrypt.checkpw(contrasenaIngresada, contrasena);
-
-        return contrasenaValidada;
+        if (contrasenaValidada) {
+            return oUser;
+        } else {
+            return null;
+        }
 
     }
 
