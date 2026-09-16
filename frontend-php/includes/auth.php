@@ -25,7 +25,7 @@ function current_user()
 
 function is_logged_in()
 {
-    return !empty($_SESSION['user']);
+    return !empty($_SESSION['usuario']);
 }
 function is_admin()
 {

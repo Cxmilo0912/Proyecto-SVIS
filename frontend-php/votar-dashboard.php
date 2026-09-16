@@ -1,57 +1,64 @@
 <?php
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/includes/ApiClient.php';
+require_once __DIR__ . '/includes/auth.php';
 
-$titulo = 'Crear Encuesta';
+$titulo = 'Consultas Activas';
 $msg = null;
 $err = null;
 
 
-$lista = api()->get('/encuestas');
+$u = current_user();
+$idJornadaUsuario = $u['Jornada']['Id'] ?? null;
+
+$lista = $idJornadaUsuario
+    ? api()->get('/api/encuestas?jornada=' . $idJornadaUsuario)
+    : ['ok' => false, 'data' => []];
+
+$mensajeExito = $_GET['exito'] ?? null;
 require __DIR__ . '/includes/header.php';
 
 ?>
+<?php if ($mensajeExito): ?>
+            <div style="background-color: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-weight: 600; text-align: center;">
+                ✓ <?= h($mensajeExito) ?>
+            </div>
+        <?php endif; ?>
         <section class="section-block">
             <div class="section-header">
                 <h2>Votaciones y Consultas Vigentes</h2>
-                <p>Visualice únicamente las encuestas habilitadas en las que tiene derecho a participar e ingrese su token OTP para sufragar[cite: 1].</p>
-            </div>
-            
-            <div class="dashboard-grid" style="grid-template-columns: 1fr;">
-            
-                <div class="card" style="background-color: var(--bg-card);">
-                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div>
-                            <span class="badge active" style="margin-bottom: 0.5rem; display: inline-block;">ACTIVA</span>
-                            <h3>Elección Consejo Estudiantil 2026</h3>
-                            <p>Seleccione su candidato de preferencia de forma segura, garantizando el secreto absoluto del sufragio[cite: 1].</p>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; border-top: 1px solid var(--border-card); padding-top: 1rem;">
-                        <a href="votar.html" class="btn btn-primary" style="text-decoration: none; text-align: center; max-width: 200px; display: inline-block;">Ir a Votar &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección 2: Historial o Procesos Anteriores -->
-        <section class="section-block">
-            <div class="section-header">
-                <h2>Historial de Participación</h2>
-                <p>Registro de procesos democráticos en los cuales su voto ya fue procesado de forma anónima.</p>
+                <p>Visualice únicamente las encuestas habilitadas en las que tiene derecho a participar e ingrese su token OTP para sufragar.</p>
             </div>
 
             <div class="dashboard-grid" style="grid-template-columns: 1fr;">
-                <div class="card" style="background-color: #f8fafc; opacity: 0.85;">
-                    <div class="card-header">
-                        <span style="background: #cbd5e1; color: #475569; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700;">FINALIZADA</span>
-                        <h3 style="margin-top: 0.5rem;">Consulta Representante Jornada Nocturna</h3>
-                        <p>Sufragio emitido exitosamente. Comprobante hash anónimo registrado.</p>
-                    </div>
-                </div>
+                <?php if (!empty($lista['ok']) && !empty($lista['data'])): ?>
+                    <?php $hayActivas = false; ?>
+                    <?php foreach ($lista['data'] as $encuesta): ?>
+                        <?php if (($encuesta['Estado'] ?? '') === 'ACTIVA'): ?>
+                            <?php $hayActivas = true; ?>
+                            <div class="card" style="background-color: var(--bg-card);">
+                                <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
+                                    <div>
+                                        <span class="badge active" style="margin-bottom: 0.5rem; display: inline-block;"><?= h($encuesta['Estado']) ?></span>
+                                        <h3><?= h($encuesta['Titulo']) ?></h3>
+                                        <p><?= h($encuesta['Descripcion']) ?></p>
+                                    </div>
+                                </div>
+                                <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end; border-top: 1px solid var(--border-card); padding-top: 1rem;">
+                                    <a href="votar.php?id=<?= (int) $encuesta['Id'] ?>" class="btn btn-primary" style="text-decoration: none; text-align: center; max-width: 200px; display: inline-block;">Ir a Votar &rarr;</a>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                    <?php if (!$hayActivas): ?>
+                        <p>No hay encuestas activas para su jornada en este momento.</p>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <p>No hay encuestas activas para su jornada en este momento.</p>
+                <?php endif; ?>
             </div>
         </section>
+
     </main>
 </body>
 </html>

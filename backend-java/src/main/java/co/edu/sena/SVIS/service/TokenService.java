@@ -25,11 +25,15 @@ public class TokenService {
 
     private final TokensRepositorio tokenRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
+    private final OpcionesEncuestaRepositorio opcionesEncuestarepositorio;
 
-    public TokenService(TokensRepositorio tokenRepositorio, UsuarioRepositorio usuarioRepositorio) {
+    public TokenService(TokensRepositorio tokenRepositorio, UsuarioRepositorio usuarioRepositorio, OpcionesEncuestaRepositorio opcionesEncuestarepositorio) {
         this.tokenRepositorio = tokenRepositorio;
         this.usuarioRepositorio = usuarioRepositorio;
+        this.opcionesEncuestarepositorio = opcionesEncuestarepositorio;
     }
+
+    
 
     public void MtCrear(int idEncuesta, int idJornada, int diasExpiracion) {
 
@@ -60,7 +64,7 @@ public class TokenService {
         tokenRepositorio.Crear(tokens);
     }
 
-    public void validarYConsumirToken(String codigoToken, int idEncuesta) {
+    public void validarYConsumirToken(String codigoToken, int idEncuesta,int idOpcion) {
         Connection cn = null;
         try {
             cn = ConexionDB.getConnection();
@@ -87,6 +91,7 @@ public class TokenService {
             }
 
             tokenRepositorio.MtMarcarComoUsado(cn, oToken.getId());
+            opcionesEncuestarepositorio.ActualizarConteoVotos(cn, idOpcion);
 
             cn.commit();
 

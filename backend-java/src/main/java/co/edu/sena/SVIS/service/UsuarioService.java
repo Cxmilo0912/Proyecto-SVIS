@@ -129,6 +129,7 @@ public class UsuarioService {
         v.Celular = u.getCelular();
         v.Rol = u.getRol().getNombre();
         v.Jornada = u.getJornada().getNombre();
+        v.IdJornada = u.getJornada().getId();
 
         return v;
     }

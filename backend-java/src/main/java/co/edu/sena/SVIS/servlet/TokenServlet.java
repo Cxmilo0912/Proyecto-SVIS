@@ -6,6 +6,7 @@ package co.edu.sena.SVIS.servlet;
 
 import co.edu.sena.SVIS.config.AppContext;
 import co.edu.sena.SVIS.dto.ApiError;
+import co.edu.sena.SVIS.dto.ConsumirTokenRequest;
 import co.edu.sena.SVIS.dto.PadronToken;
 import co.edu.sena.SVIS.service.TokenService;
 import co.edu.sena.SVIS.util.JsonUtil;
@@ -17,9 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * GET /api/tokens -> busca el token del usuario segun la encuesta que haya
- * elegido} POST /api/tokens/{idEncuesta} && {usuariosHabilitados} -> crea y
- * genear el padron de tokens de una encuesta POST /api/usuarios/ {token} &&
- * {encuesta} -> consume el token
+ * elegido. POST /api/tokens/idEncuesta y usuariosHabilitados -> crea y genera
+ * el padron de tokens de una encuesta. POST /api/usuarios/token y encuesta ->
+ * consume el token
  */
 @WebServlet("/api/tokens/*")
 public class TokenServlet extends BaseApiServlet {
@@ -69,7 +70,15 @@ public class TokenServlet extends BaseApiServlet {
                 if (partes.length >= 3) {
                     int idEncuesta = Integer.parseInt(partes[1]);
                     String token = partes[2];
-                    tokenService.validarYConsumirToken(token, idEncuesta);
+
+                    String jsonBody = readBody(req);
+                    ConsumirTokenRequest reqDto = JsonUtil.fromJson(jsonBody, ConsumirTokenRequest.class);
+
+                    if (reqDto == null || reqDto.idOpcion <= 0) {
+                        writeJson(resp, 400, new ApiError("BAD_REQUEST", "Falta la opción seleccionada"));
+                        return;
+                    }
+                    tokenService.validarYConsumirToken(token, idEncuesta,reqDto.idOpcion);
                     writeJson(resp, 200, new MensajeRespuesta("El token se ha consumido correctamente"));
                 }
             } else {
@@ -78,9 +87,9 @@ public class TokenServlet extends BaseApiServlet {
                 PadronToken padronTokenDto = JsonUtil.fromJson(jsonBody, PadronToken.class);
 
                 if (padronTokenDto == null || padronTokenDto.idEncuesta <= 0 || padronTokenDto.idJornada <= 0) {
-    writeJson(resp, 400, new ApiError("BAD_REQUEST", "Faltan datos obligatorios de la encuesta o la jornada"));
-    return;
-}
+                    writeJson(resp, 400, new ApiError("BAD_REQUEST", "Faltan datos obligatorios de la encuesta o la jornada"));
+                    return;
+                }
 
                 tokenService.MtCrear(padronTokenDto.idEncuesta, padronTokenDto.idJornada, padronTokenDto.numeroDias);
                 writeJson(resp, 200, new MensajeRespuesta("El padron de tokens se ha generado correctamente"));

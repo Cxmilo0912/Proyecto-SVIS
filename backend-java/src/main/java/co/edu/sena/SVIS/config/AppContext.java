@@ -39,13 +39,14 @@ public class AppContext {
         UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorioJdbc();
         RolRepositorio rolRepositorio = new RolRepositorioJdbc();
         TokensRepositorio tokenRepositorio = new TokensRepositorioJdbc();
+        OpcionesEncuestaRepositorio opcionesRepositorio = new OpcionesEncuestaRepositorioJdbc();
 
         OpcionesEncuestaRepositorio opcionesRepo = new OpcionesEncuestaRepositorioJdbc();
         JornadaRepositorio jornadaRepo = new JornadaRepositorioJdbc();
 
         this.usuarioService = new UsuarioService(usuarioRepositorio);
         this.rolService = new RolService(rolRepositorio);
-        this.tokenService = new TokenService(tokenRepositorio, usuarioRepositorio);
+        this.tokenService = new TokenService(tokenRepositorio, usuarioRepositorio,opcionesRepositorio);
         this.encuestaService = new EncuestaService(encuestaRepo, opcionesRepo);
         this.jornadaService = new JornadaService(jornadaRepo);
     }

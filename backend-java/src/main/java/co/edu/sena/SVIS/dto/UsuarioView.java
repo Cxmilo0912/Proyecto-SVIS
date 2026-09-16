@@ -21,5 +21,6 @@ public class UsuarioView {
     public String Celular;
     public String Rol;
     public String Jornada;
+    public int IdJornada;
 
 }

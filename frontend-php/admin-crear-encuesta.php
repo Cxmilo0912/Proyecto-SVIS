@@ -126,7 +126,9 @@ document.getElementById('formEncuesta').addEventListener('submit', async functio
     }
 
     try {
-        const apiUrl = 'http://localhost:8080/backend-java/api/encuestas'; 
+        const apiUrl = esEdicion
+        ? `http://localhost:8080/backend-java/api/encuestas/${idEdit}`
+        : 'http://localhost:8080/backend-java/api/encuestas';
         const methodHttp = 'POST';
 
         const response = await fetch(apiUrl, {
