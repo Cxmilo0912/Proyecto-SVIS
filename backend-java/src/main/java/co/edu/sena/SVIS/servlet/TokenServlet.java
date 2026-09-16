@@ -77,12 +77,12 @@ public class TokenServlet extends BaseApiServlet {
 
                 PadronToken padronTokenDto = JsonUtil.fromJson(jsonBody, PadronToken.class);
 
-                if (padronTokenDto == null || padronTokenDto.idsUsuariosHabilitados == null || padronTokenDto.idsUsuariosHabilitados.isEmpty()) {
-                    writeJson(resp, 400, new ApiError("BAD_REQUEST", "La lista de usuarios esta vacia"));
-                    return;
-                }
+                if (padronTokenDto == null || padronTokenDto.idEncuesta <= 0 || padronTokenDto.idJornada <= 0) {
+    writeJson(resp, 400, new ApiError("BAD_REQUEST", "Faltan datos obligatorios de la encuesta o la jornada"));
+    return;
+}
 
-                tokenService.MtCrear(padronTokenDto.idEncuesta, padronTokenDto.idsUsuariosHabilitados);
+                tokenService.MtCrear(padronTokenDto.idEncuesta, padronTokenDto.idJornada, padronTokenDto.numeroDias);
                 writeJson(resp, 200, new MensajeRespuesta("El padron de tokens se ha generado correctamente"));
 
             }

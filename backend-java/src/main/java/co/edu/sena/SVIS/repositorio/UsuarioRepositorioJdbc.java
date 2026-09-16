@@ -104,8 +104,8 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
             ps.setInt(7, usuario.getId());
             ps.executeUpdate();
         } catch (Exception e) {
-    throw new RuntimeException("No se pudo actualizar la informacion del usuario: ", e);
-}
+            throw new RuntimeException("No se pudo actualizar la informacion del usuario: ", e);
+        }
     }
 
     @Override
@@ -150,6 +150,30 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
         return oUsuario;
 
     }
-    
+
+    @Override
+    public List<Integer> MtBuscarIdsUsuariosPorJornada(int idJornada) {
+
+        String sql = "Select Id From usuario Where IdJornada = ? ";
+
+        List<Integer> idUsuarios = new ArrayList<>();
+        try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
+
+            ps.setInt(1, idJornada);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+                    idUsuarios.add(rs.getInt("Id"));
+                }
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("No se pudieron obtener los usuarios asociados a la jornada: ", e);
+        }
+
+        return idUsuarios;
+
+    }
 
 }

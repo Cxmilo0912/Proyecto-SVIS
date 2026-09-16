@@ -45,7 +45,7 @@ public class AppContext {
 
         this.usuarioService = new UsuarioService(usuarioRepositorio);
         this.rolService = new RolService(rolRepositorio);
-        this.tokenService = new TokenService(tokenRepositorio);
+        this.tokenService = new TokenService(tokenRepositorio, usuarioRepositorio);
         this.encuestaService = new EncuestaService(encuestaRepo, opcionesRepo);
         this.jornadaService = new JornadaService(jornadaRepo);
     }

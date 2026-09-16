@@ -16,4 +16,5 @@ public interface UsuarioRepositorio {
     void Crear(Usuario usuario);
     void Editar(Usuario usuario);
     Usuario ValidarCredenciales(String email);
+    List<Integer> MtBuscarIdsUsuariosPorJornada(int idJornada);
 }

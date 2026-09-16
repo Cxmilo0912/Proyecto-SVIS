@@ -7,7 +7,7 @@ package co.edu.sena.SVIS.service;
 import co.edu.sena.SVIS.model.Encuesta;
 import co.edu.sena.SVIS.model.Token;
 import co.edu.sena.SVIS.model.Usuario;
-import co.edu.sena.SVIS.repositorio.TokensRepositorio;
+import co.edu.sena.SVIS.repositorio.*;
 import co.edu.sena.SVIS.util.ConexionDB;
 import java.security.SecureRandom;
 import java.sql.Connection;
@@ -24,16 +24,20 @@ import java.util.UUID;
 public class TokenService {
 
     private final TokensRepositorio tokenRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
 
-    public TokenService(TokensRepositorio tokenRepositorio) {
+    public TokenService(TokensRepositorio tokenRepositorio, UsuarioRepositorio usuarioRepositorio) {
         this.tokenRepositorio = tokenRepositorio;
+        this.usuarioRepositorio = usuarioRepositorio;
     }
 
-    public void MtCrear(int idEncuesta, List<Integer> idsUsuariosHabilitados) {
+    public void MtCrear(int idEncuesta, int idJornada, int diasExpiracion) {
 
         List<Token> tokens = new ArrayList<>();
 
-        LocalDateTime fechaExpiracion = LocalDateTime.now().plusDays(3);
+        LocalDateTime fechaExpiracion = LocalDateTime.now().plusDays(diasExpiracion);
+        
+        List<Integer> idsUsuariosHabilitados = usuarioRepositorio.MtBuscarIdsUsuariosPorJornada(idJornada);
 
         for (int idUsuario : idsUsuariosHabilitados) {
 
