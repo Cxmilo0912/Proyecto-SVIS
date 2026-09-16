@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * GET /api/usuarios -> lista de usuarios} 
- * POST /api/usuarios/{id} -> edita un usuario 
+ * GET /api/usuarios -> lista de usuarios
+ * POST /api/usuarios/id -> edita un usuario
  * POST /api/usuarios -> crea un usuario
- * POST /api/usuarios {email} & {password}
+ * POST /api/usuarios email y password
  */
 @WebServlet("/api/usuarios/*")
 public class UsuarioServlet extends BaseApiServlet {

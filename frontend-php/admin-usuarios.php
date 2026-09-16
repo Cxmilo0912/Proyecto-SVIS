@@ -174,6 +174,7 @@ require __DIR__ . '/includes/header.php';
                     <tr>
                         <th>Id</th>
                         <th>Documento</th>
+                        <th>Celular</th>
                         <th>Nombre Completo</th>
                         <th>Correo Institucional</th>
                         <th>Rol</th>

@@ -58,7 +58,9 @@ public class EncuestaServlet extends BaseApiServlet {
                 writeJson(resp, 201, new MensajeRespuesta("Encuesta creada exitosamente"));
             } 
             else {
-              
+                int idEncuesta = Integer.parseInt(path.substring(1));
+                requestDto.Id = idEncuesta;
+                encuestaService.MtEditar(requestDto);
                 writeJson(resp, 200, new MensajeRespuesta("Encuesta actualizada exitosamente"));
             }
 

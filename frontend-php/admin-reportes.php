@@ -43,6 +43,7 @@ require __DIR__ . '/includes/header.php';
                 <?php foreach($lista['data']as $e): ?>
                     <?php 
                             $tituloEnc = h($e['titulo'] ?? $e['Titulo'] ?? 'Sin Título');
+                            $descripcionEnc = h($e['descripcion'] ?? $e['Descripcion'] ?? 'Sin Título');
                             $estadoEnc = h($e['estado'] ?? $e['Estado'] ?? 'ACTIVA');
                             $opcionesEnc = $e['opciones'] ?? $e['Opciones'] ?? [];
                             
@@ -58,7 +59,7 @@ require __DIR__ . '/includes/header.php';
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <h3><?= $tituloEnc ?></h3>
-                            <p>Resultados oficiales auditados mediante control de concurrencia ACID.</p>
+                            <p><?= $descripcionEnc ?></p>
                         </div>
                         <span class="badge active"><?= $estadoEnc ?></span>
                     </div>

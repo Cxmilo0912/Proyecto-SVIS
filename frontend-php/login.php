@@ -25,7 +25,7 @@ function login($usuario, $password){
     return ['ok' => true];
     }
 
-    $mensajeError = $resp['data']['error'] ?? 'Credenciales inválidas o error de conexión.';
+    $mensajeError = $resp['data']['mensaje'] ?? $resp['data']['error'] ?? 'Credenciales inválidas o error de conexión.';
     return ['ok' => false, 'error' => $mensajeError];
 }
 if($_SERVER['REQUEST_METHOD'] === 'POST'){

@@ -111,14 +111,10 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
     @Override
     public Usuario ValidarCredenciales(String email) {
 
-        String sql = "Select u.Documento, u.Nombre, u.Apellido, u.Email, u.Celular, u.Contraseña, r.Nombre as NombreRol, j.Nombre as NombreJornada From usuario u "
-                + "Inner Join rol r "
-                + "ON "
-                + "u.IdRol = r.Id "
-                + "Inner Join jornada j "
-                + "ON "
-                + "u.IdJornada = j.Id "
-                + "Where u.Email = ? ";
+        String sql = "Select u.Id, u.Documento, u.Nombre, u.Apellido, u.Email, u.Celular, u.Contraseña, u.IdJornada, r.Nombre as NombreRol, j.Nombre as NombreJornada From usuario u "
+        + "Inner Join rol r ON u.IdRol = r.Id "
+        + "Inner Join jornada j ON u.IdJornada = j.Id "
+        + "Where u.Email = ? ";
 
         Usuario oUsuario = null;
 
@@ -138,6 +134,7 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
                     Rol oRol = new Rol();
                     oRol.setNombre(rs.getString("NombreRol"));
                     Jornada oJornada = new Jornada();
+                    oJornada.setId(rs.getInt("IdJornada"));
                     oJornada.setNombre(rs.getString("NombreJornada"));
                     oUsuario.setRol(oRol);
                     oUsuario.setJornada(oJornada);
@@ -154,7 +151,9 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
     @Override
     public List<Integer> MtBuscarIdsUsuariosPorJornada(int idJornada) {
 
-        String sql = "Select Id From usuario Where IdJornada = ? ";
+        String sql = "Select u.Id From usuario u "
+            + "Inner Join rol r ON u.IdRol = r.Id "
+            + "Where u.IdJornada = ? And r.Nombre = 'Votante' ";
 
         List<Integer> idUsuarios = new ArrayList<>();
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {

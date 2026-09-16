@@ -5,6 +5,8 @@
 package co.edu.sena.SVIS.repositorio;
 
 import co.edu.sena.SVIS.model.OpcionesEncuesta;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -13,6 +15,6 @@ import java.util.List;
  */
 public interface OpcionesEncuestaRepositorio {
     List<OpcionesEncuesta> ListarPorEncuesta(int IdEncuesta);
-    void ActualizarConteoVotos(int IdOpcion);
+    void ActualizarConteoVotos(Connection cn, int idOpcion) throws SQLException;
    
 }

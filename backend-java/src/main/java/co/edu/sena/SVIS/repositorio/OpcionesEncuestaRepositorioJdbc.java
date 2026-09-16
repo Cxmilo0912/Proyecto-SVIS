@@ -43,16 +43,15 @@ public class OpcionesEncuestaRepositorioJdbc implements OpcionesEncuestaReposito
     }
 
     @Override
-    public void ActualizarConteoVotos(int IdOpcion) {
-        String sql = "update opcionesencuesta set VotosAcumulado=VotosAcumulados+1 where Id=?";
-
-        try (Connection c = ConexionDB.getConnection(); PreparedStatement ps = c.prepareStatement(sql)) {
-            ps.setInt(1, IdOpcion);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al consultar las opciones", e);
+    public void ActualizarConteoVotos(Connection cn, int idOpcion) throws SQLException {
+        String sql = "update opcionesencuesta set VotosAcumulados = VotosAcumulados + 1 where Id = ?";
+        try (PreparedStatement ps = cn.prepareStatement(sql)) {
+            ps.setInt(1, idOpcion);
+            int filas = ps.executeUpdate();
+            if (filas == 0) {
+                throw new SQLException("No se encontró la opción de encuesta con ID " + idOpcion);
+            }
         }
-
     }
 
 }
