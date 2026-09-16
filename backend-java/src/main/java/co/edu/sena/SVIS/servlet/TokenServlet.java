@@ -8,9 +8,12 @@ import co.edu.sena.SVIS.config.AppContext;
 import co.edu.sena.SVIS.dto.ApiError;
 import co.edu.sena.SVIS.dto.ConsumirTokenRequest;
 import co.edu.sena.SVIS.dto.PadronToken;
+import co.edu.sena.SVIS.dto.PadronTokenView;
+import co.edu.sena.SVIS.dto.TokenView;
 import co.edu.sena.SVIS.service.TokenService;
 import co.edu.sena.SVIS.util.JsonUtil;
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,20 +38,26 @@ public class TokenServlet extends BaseApiServlet {
             String idEncuestaStr = req.getParameter("idEncuesta");
             String idUsuarioStr = req.getParameter("idUsuario");
 
-            if (idEncuestaStr == null || idUsuarioStr == null || idEncuestaStr.isEmpty() || idUsuarioStr.isEmpty()) {
-                writeJson(resp, 400, new ApiError("BAD_REQUEST", "Faltan los parámetros idEncuesta e idUsuario"));
+            if (idEncuestaStr != null && idUsuarioStr != null && !idEncuestaStr.isEmpty() && !idUsuarioStr.isEmpty()) {
+                int idEncuesta = Integer.parseInt(idEncuestaStr);
+                int idUsuario = Integer.parseInt(idUsuarioStr);
+
+                TokenView token = tokenService.MtBuscarTokenUsuario(idEncuesta, idUsuario);
+
+                if (token != null) {
+                    writeJson(resp, 200, token.Token);
+                } else {
+                    writeJson(resp, 404, new ApiError("NOT_FOUND", "No se encontró un token asignado para este usuario en la encuesta."));
+                }
                 return;
             }
-
-            int idEncuesta = Integer.parseInt(idEncuestaStr);
-            int idUsuario = Integer.parseInt(idUsuarioStr);
-
-            String token = tokenService.MtBuscarTokenUsuario(idEncuesta, idUsuario);
-
-            if (token != null) {
-                writeJson(resp, 200, token);
-            } else {
-                writeJson(resp, 404, new ApiError("NOT_FOUND", "No se encontró un token asignado para este usuario en la encuesta."));
+            
+            List<PadronTokenView> lista = tokenService.MtListarLoteTokens();
+            
+            if (lista != null || !lista.isEmpty()) {
+                writeJson(resp, 200, lista);
+            }else{
+                writeJson(resp, 404, new ApiError("NOT_FOUND", "No se pudo obtener la informacion d ela lista"));
             }
         } catch (NumberFormatException ex) {
             writeJson(resp, 400, new ApiError("BAD_REQUEST", "Los identificadores numéricos no son válidos"));
@@ -78,7 +87,7 @@ public class TokenServlet extends BaseApiServlet {
                         writeJson(resp, 400, new ApiError("BAD_REQUEST", "Falta la opción seleccionada"));
                         return;
                     }
-                    tokenService.validarYConsumirToken(token, idEncuesta,reqDto.idOpcion);
+                    tokenService.validarYConsumirToken(token, idEncuesta, reqDto.idOpcion);
                     writeJson(resp, 200, new MensajeRespuesta("El token se ha consumido correctamente"));
                 }
             } else {

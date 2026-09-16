@@ -4,6 +4,8 @@
  */
 package co.edu.sena.SVIS.service;
 
+import co.edu.sena.SVIS.dto.PadronTokenView;
+import co.edu.sena.SVIS.dto.TokenView;
 import co.edu.sena.SVIS.model.Encuesta;
 import co.edu.sena.SVIS.model.Token;
 import co.edu.sena.SVIS.model.Usuario;
@@ -33,14 +35,12 @@ public class TokenService {
         this.opcionesEncuestarepositorio = opcionesEncuestarepositorio;
     }
 
-    
-
     public void MtCrear(int idEncuesta, int idJornada, int diasExpiracion) {
 
         List<Token> tokens = new ArrayList<>();
 
         LocalDateTime fechaExpiracion = LocalDateTime.now().plusDays(diasExpiracion);
-        
+
         List<Integer> idsUsuariosHabilitados = usuarioRepositorio.MtBuscarIdsUsuariosPorJornada(idJornada);
 
         for (int idUsuario : idsUsuariosHabilitados) {
@@ -64,7 +64,7 @@ public class TokenService {
         tokenRepositorio.Crear(tokens);
     }
 
-    public void validarYConsumirToken(String codigoToken, int idEncuesta,int idOpcion) {
+    public void validarYConsumirToken(String codigoToken, int idEncuesta, int idOpcion) {
         Connection cn = null;
         try {
             cn = ConexionDB.getConnection();
@@ -116,7 +116,18 @@ public class TokenService {
         }
     }
 
-    public String MtBuscarTokenUsuario(int idEncuesta, int idUsuario) {
-        return tokenRepositorio.MtBuscarTokenUsuario(idEncuesta, idUsuario);
+    public TokenView MtBuscarTokenUsuario(int idEncuesta, int idUsuario) {
+
+        String token = tokenRepositorio.MtBuscarTokenUsuario(idEncuesta, idUsuario);
+        TokenView oTokenV = new TokenView();
+        oTokenV.Token = token;
+
+        return oTokenV;
+
     }
+
+    public List<PadronTokenView> MtListarLoteTokens() {
+        return tokenRepositorio.MtListarLoteTokens();
+    }
+
 }

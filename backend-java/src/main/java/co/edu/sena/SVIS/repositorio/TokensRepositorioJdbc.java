@@ -4,12 +4,14 @@
  */
 package co.edu.sena.SVIS.repositorio;
 
+import co.edu.sena.SVIS.dto.PadronTokenView;
 import co.edu.sena.SVIS.model.Token;
 import co.edu.sena.SVIS.util.ConexionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,6 +116,47 @@ public class TokensRepositorioJdbc implements TokensRepositorio {
         }
 
         return token;
+
+    }
+
+    @Override
+    public List<PadronTokenView> MtListarLoteTokens() {
+
+        String sql = "SELECT "
+                + "    e.Id AS IdEncuesta, "
+                + "    e.Titulo AS TituloEncuesta, "
+                + "    COUNT(t.Id) AS TotalAsignados, "
+                + "    SUM(CASE WHEN t.FechaUso IS NULL THEN 1 ELSE 0 END) AS Disponibles, "
+                + "    SUM(CASE WHEN t.FechaUso IS NOT NULL THEN 1 ELSE 0 END) AS Usados "
+                + "FROM encuesta e "
+                + "LEFT JOIN tokens t ON e.Id = t.IdEncuesta "
+                + "GROUP BY e.Id, e.Titulo;";
+
+        List<PadronTokenView> lista = new ArrayList<>();
+
+        try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+
+                    PadronTokenView oPadron = new PadronTokenView();
+                    oPadron.idEncuesta = rs.getInt("IdEncuesta");
+                    oPadron.Encuesta = rs.getString("TituloEncuesta");
+                    oPadron.totalAsignados = rs.getInt("TotalAsignados");
+                    oPadron.disponibles = rs.getInt("Disponibles");
+                    oPadron.usados = rs.getInt("Usados");
+                    lista.add(oPadron);
+
+                }
+
+            }
+
+        } catch (Exception e) {
+            
+            throw new RuntimeException("No se pudo listar la informacion de los padornes de tokens", e);
+        }
+        return lista;
 
     }
 

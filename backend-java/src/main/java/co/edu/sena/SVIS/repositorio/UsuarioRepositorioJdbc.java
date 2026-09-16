@@ -125,6 +125,7 @@ public class UsuarioRepositorioJdbc implements UsuarioRepositorio {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     oUsuario = new Usuario();
+                    oUsuario.setId(rs.getInt("Id"));
                     oUsuario.setDocumento(rs.getString("Documento"));
                     oUsuario.setNombre(rs.getString("Nombre"));
                     oUsuario.setApellido(rs.getString("Apellido"));
