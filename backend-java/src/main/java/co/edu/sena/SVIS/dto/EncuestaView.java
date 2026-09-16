@@ -16,6 +16,7 @@ public class EncuestaView {
     private String Titulo;
     private String Descripcion;
     private String Estado;
+    private int idJornada;
     private String Jornada;
     private List<OpcionesEncuestaView> opciones;
 
@@ -68,6 +69,14 @@ public class EncuestaView {
 
     public void setJornada(String Jornada) {
         this.Jornada = Jornada;
+    }
+
+    public int getIdJornada() {
+        return idJornada;
+    }
+
+    public void setIdJornada(int idJornada) {
+        this.idJornada = idJornada;
     }
     
     

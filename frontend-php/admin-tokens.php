@@ -19,19 +19,30 @@ require __DIR__ . '/includes/header.php';
             </div>
             
             <div class="card-creation">
-                <form action="#" method="POST" class="styled-form">
+                <form action="#" method="post" class="styled-form">
                     <div class="form-row">
                         <div class="form-group flex-2">
-                            <label for="encuesta_select">Seleccionar Encuesta Destino</label>
-                            <select id="encuesta_select" name="encuesta_id" required>
-                                <option value="1">Elección Consejo Estudiantil 2026</option>
-                                <option value="2">Consulta Representante Jornada Nocturna</option>
-                            </select>
+                            <label for="encuesta">Encuestas</label>
+                <select name="encuesta" id="encuesta">
+                    <option value="" disabled>Seleccione...</option>
+                    <?php
+                        $resEncuesta = api()->get('/api/encuestas');
+                        if (!empty($resEncuesta['ok']) && !empty($resEncuesta['data'])) {
+                            foreach ($resEncuesta['data'] as $e) {
+                                $idEncuesta = h($e['id'] ?? $e['Id'] ?? '');
+                                $idJornada  = h($e['idJornada'] ?? $e['IdJornada'] ?? ''); // Extraemos el ID de la jornada
+                                $titulo     = h($e['titulo'] ?? $e['Titulo'] ?? '');
+                                echo '<option value="' . $idEncuesta . '" data-jornada="' . $idJornada . '">' . $titulo . '</option>';                            }
+                        } else {
+                            echo '<option value="" disabled>Error cargando jornadas</option>';
+                        }
+                    ?>
+                </select>
                         </div>
                         <div class="form-group flex-1">
                             <label for="ttl_horas">Tiempo de Expiración (TTL)</label>
-                            <input type="number" id="ttl_horas" name="ttl_horas" value="24" required>
-                            <small>Horas de vigencia para los códigos OTP.</small>
+                            <input type="number" id="diasVigencia" name="ttl_horas" value="7" required>
+                            <small>Dias de vigencia para los códigos OTP.</small>
                         </div>
                     </div>
                     <div class="info-box">
@@ -74,5 +85,53 @@ require __DIR__ . '/includes/header.php';
             </div>
         </section>
     </main>
+
+       <script>
+document.querySelector('.styled-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const btnGuardar = this.querySelector('button[type="submit"]');
+    const textoOriginal = btnGuardar.textContent;
+    btnGuardar.disabled = true;
+    btnGuardar.textContent = 'Generando...';
+
+    const selectEncuesta = document.getElementById('encuesta');
+    const optionSeleccionada = selectEncuesta.options[selectEncuesta.selectedIndex];
+    const payload = {
+        idEncuesta: parseInt(selectEncuesta.value, 10),
+        idJornada: parseInt(optionSeleccionada.getAttribute('data-jornada'), 10),
+        numeroDias: parseInt(document.getElementById('diasVigencia').value, 10)
+
+    };
+
+    try {
+        const apiUrl = 'http://localhost:8080/backend-java/api/tokens';
+
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        const resData = await response.json().catch(() => ({}));
+
+        if (response.ok) {
+            alert('¡Padron generado exitosamente!');
+            window.location.href = 'admin-tokens.php';
+        } else {
+            alert('Error (' + response.status + '): ' + (resData.mensaje || resData.error || 'No se pudo generar el padron'));
+        }
+    } catch (err) {
+        console.error('Error de red:', err);
+        alert('Ocurrió un error al conectar con el servidor Java (Tomcat).');
+    } finally {
+        btnGuardar.disabled = false;
+        btnGuardar.textContent = textoOriginal;
+    }
+});
+</script>
 </body>
 </html>

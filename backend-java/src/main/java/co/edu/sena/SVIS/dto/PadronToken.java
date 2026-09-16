@@ -13,6 +13,7 @@ import java.util.List;
 public class PadronToken {
 
     public int idEncuesta;
-    public List<Integer> idsUsuariosHabilitados;
+    public int idJornada;
+    public int numeroDias;
 
 }
